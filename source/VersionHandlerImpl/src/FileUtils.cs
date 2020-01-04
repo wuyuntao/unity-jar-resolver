@@ -329,6 +329,13 @@ namespace Google {
             } catch (Exception ex) {
                 logger.Log(String.Format("Failed to checkout {0} ({1}.", path, ex),
                            level: LogLevel.Warning);
+                // TODO Perforce provider of Unity 2019.2+ seems to be not recognizing XML assets in ProjectSettings/
+                //      https://github.com/googlesamples/unity-jar-resolver/issues/310
+                if (path.StartsWith("ProjectSettings") && path.EndsWith("xml"))
+                {
+                    return true;
+                }
+
                 return false;
             }
         }
